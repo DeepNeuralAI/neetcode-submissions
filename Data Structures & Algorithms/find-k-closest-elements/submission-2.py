@@ -1,0 +1,36 @@
+class Solution:
+    def findClosestElements(self, arr: List[int], k: int, x: int) -> List[int]:
+        # Binary Search
+        n = len(arr)
+        l = 0
+        r = n - 1
+
+        minIdx = n
+        while l <= r:
+            mid = (l + r) // 2
+
+            if arr[mid] < x:
+                l = mid + 1
+            else:
+                minIdx = mid
+                r = mid - 1
+     
+        l, r = minIdx - 1, minIdx
+        res = []
+
+        while len(res) < k:
+            if l >= 0 and r < n:
+                if abs(arr[l] - x) <= abs(arr[r] - x):
+                    res.append(arr[l])
+                    l -= 1
+                else:
+                    res.append(arr[r])
+                    r += 1
+            elif l >= 0:
+                res.append(arr[l])
+                l -= 1
+            elif r < n:
+                res.append(arr[r])
+                r += 1
+                
+        return sorted(res)
